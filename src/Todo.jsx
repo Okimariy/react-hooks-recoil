@@ -39,9 +39,15 @@ const Todo = () => {
     SetTodoTitle(e.target.value);
   };
 
+  // Inputの中身を削除させる変数
+  const initialState = {
+    todotext: "",
+    subtext: "",
+  };
+
   //   Inputの中身をresetさせる;
   const resetTodo = () => {
-    SetTodoTitle("");
+    SetTodoTitle({ ...initialState });
   };
 
   //   他に同じ内容が入力されていないかチェックする
@@ -52,7 +58,7 @@ const Todo = () => {
 
   const addTodo = () => {
     SetTodo([
-      ...todo,
+      ...todo, //配列に中を展開する
       {
         todotext: todotitle,
         subtext: todotitle,
@@ -95,7 +101,14 @@ const Todo = () => {
         Primary
       </Button>
 
-      <List className={classes.root}></List>
+      <List className={classes.root} component="ul">
+        {todo.map((x) => (
+          <ListItem key={x.todotext} component="li">
+            <ListItemText>{x.todotext}</ListItemText>
+            <ListItemText>{x.subtext}</ListItemText>
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 };
