@@ -5,7 +5,7 @@ import {
   Button,
   List,
   ListItem,
-  ListItemText,
+  // ListItemText,
   Checkbox,
 } from "@material-ui/core/";
 
@@ -35,26 +35,12 @@ const Todo = () => {
   console.log(todo);
   console.log(todotitle);
 
-  // Input要素に入力するとSetTodoTitleを使って、todotitleにデータを追加する
-  // const handleCheangeTodo = (e) => {
-  //   SetTodoTitle(e.target.value);
-  // };
-
-  // function handleCheangeTodo(e) {
-  //   const target = e.target;
-  //   const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const name = target.name;
-  //   SetTodoTitle({ ...todotitle, [name]: value });
-  // }
-
   const handleCheangeTodo = (e) => {
     SetTodoTitle({
       ...todotitle,
       [e.target.name]: e.target.value,
     });
   };
-
-  // ...JobFormData,
 
   // Inputの中身を削除させる変数
   const initialState = {
@@ -90,14 +76,14 @@ const Todo = () => {
   //   論理演算子 && ||
   //   それぞれ「AND」「OR」という意味で、条件処理の中で使うことが多い演算子
 
-  const deleteTask = (todo) => {
-    SetTodo(todo.filter((x) => x !== todo));
+  const deleteTask = (todos) => {
+    SetTodo(todo.filter((x) => x !== todos));
     //SetTodoの中のtodotext.
   };
-  const handleCheckboxChanges = (todo) => {
+  const handleCheckboxChanges = (todos) => {
     SetTodo(
       todo.filter((x) => {
-        if (x === todo) x.doing = !x.doing;
+        if (x === todos) x.doing = !x.doing;
         return x;
       })
     );
@@ -118,14 +104,6 @@ const Todo = () => {
             label="内容入力"
             variant="outlined"
             value={todotitle.todotext}
-            // onChange={(e) =>
-            //   SetTodoTitle({ ...todotitle, [e.target.value]: e.target.value })
-            // }
-            // onChange={(e) => SetTodoTitle(e.target.value)}
-            // onChange={(e) =>
-            //   SetTodoTitle({ ...todotitle, todotext: e.target.value })
-            // }
-            // onChange={(e) => SetTodoTitle({ todotext: e.target.value })}
             onChange={handleCheangeTodo}
             KeyboardButtonProps={{
               "aria-label": "change todotext",
@@ -141,14 +119,6 @@ const Todo = () => {
             label="内容入力2"
             variant="outlined"
             value={todotitle.subtext}
-            // onChange={(e) => SetTodoTitle(e.target.value)}
-            // onChange={(e) =>
-            //   SetTodoTitle({ ...todotitle, [e.target.value]: e.target.value })
-            // }
-            // onChange={(e) =>
-            //   SetTodoTitle({ ...todotitle, subtext: e.target.value })
-            // }
-            // onChange={(e) => SetTodoTitle({ subtext: e.target.value })}
             onChange={handleCheangeTodo}
             KeyboardButtonProps={{
               "aria-label": "change subtext",
@@ -169,19 +139,19 @@ const Todo = () => {
       </List>
       <List className={classes.root} component="ul">
         {todo.map((x) => (
-          <ListItem key={x.todotext} component="li">
+          <ListItem key={XMLDocument.todotext} component="li">
             <Checkbox
-              checked={todo.doing}
+              checked={x.doing}
               value="primary"
-              onChange={() => handleCheckboxChanges(todo)}
+              onChange={() => handleCheckboxChanges(x)}
             />
-            <ListItemText>{x.todotext}</ListItemText>
-            <ListItemText>{x.subtext}</ListItemText>
+            {x.todotext}
+            {x.subtext}
+            <Button href="" onClick={() => deleteTask(x)}>
+              削除するっぺ
+            </Button>
           </ListItem>
         ))}
-      </List>
-      <List>
-        <Button onClick={deleteTask}>削除するっぺ</Button>
       </List>
     </div>
   );
